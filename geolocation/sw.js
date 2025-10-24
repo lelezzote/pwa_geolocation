@@ -1,4 +1,4 @@
-import { offlineFallback, warmStrategyCache } from 'workbox-recipes';
+import { warmStrategyCache } from 'workbox-recipes';
 import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
 import { registerRoute, Route } from 'workbox-routing';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
@@ -25,10 +25,9 @@ warmStrategyCache({
 //registrando a rota
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
-
-registerRoute(// configurando cache de assets
-  ({ request }) => ['style', 'script', 'worker']
-    .includes(request.destination),
+// configurando cache de assets
+registerRoute(
+  ({ request }) => ['style', 'script', 'worker'].includes(request.destination),
   new StaleWhileRevalidate({
     cacheName: 'asset-cache',
     plugins: [
@@ -38,10 +37,6 @@ registerRoute(// configurando cache de assets
     ],
   }),
 );
-
-offlineFallback({// configurando offline fallback
-  pageFallback: '/offline.html',
-});
 
 const imageRoute = new Route(({ request }) => {
   return request.destination === 'image';
@@ -53,4 +48,6 @@ const imageRoute = new Route(({ request }) => {
     })
   ]
 }));
+
 registerRoute(imageRoute);
+

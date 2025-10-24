@@ -1,6 +1,6 @@
 {
-  "name": "noticias",
-  "short_name": "newspwa",
+  "name": "Geolocation Progressive Web App",
+  "short_name": "geoloc-pwa",
   "icons": [
     {
       "src": "images/bussola-256.png",
